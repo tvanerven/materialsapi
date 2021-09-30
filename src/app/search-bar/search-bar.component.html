@@ -1,0 +1,20 @@
+<mat-form-field class="chip-list" appearance="fill">
+    <mat-label>Terms</mat-label>
+    <mat-chip-list #chipList aria-label="Term selection">
+        <mat-chip *ngFor="let concept of concepts" [selectable]="selectable" [removable]="removable"
+            (removed)="remove(concept)">
+            {{concept.label}}
+            <button matChipRemove *ngIf="removable">
+                <mat-icon>cancel</mat-icon>
+            </button>
+        </mat-chip>
+        <input placeholder="New term..." #fruitInput [formControl]="conceptCtrl" [matAutocomplete]="auto"
+            [matChipInputFor]="chipList" [matChipInputSeparatorKeyCodes]="separatorKeysCodes"
+            (matChipInputTokenEnd)="add($event)">
+    </mat-chip-list>
+    <mat-autocomplete #auto="matAutocomplete" (optionSelected)="selected($event)">
+        <mat-option *ngFor="let concept of filteredConcepts | async" [value]="concept">
+            {{concept.label}}
+        </mat-option>
+    </mat-autocomplete>
+</mat-form-field>
