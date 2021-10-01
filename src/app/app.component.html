@@ -2,5 +2,5 @@
     <span>Materials browser</span>
 </mat-toolbar>
 
-<app-search-bar></app-search-bar>
-<app-result-list></app-result-list>
+<app-search-bar #searchBar></app-search-bar>
+<app-result-list [conceptFilter]="searchBar.concepts"></app-result-list>

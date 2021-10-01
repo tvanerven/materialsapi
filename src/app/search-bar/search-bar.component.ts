@@ -15,15 +15,13 @@ import { Concept } from '../common/concept';
 })
 export class SearchBarComponent {
 
-  selectable = true;
-  removable = true;
   separatorKeysCodes: number[] = [ENTER, COMMA];
   conceptCtrl = new FormControl();
   filteredConcepts: Observable<Concept[]>;
   concepts: Concept[] = [];
   allConcepts: Concept[] = CONCEPTS.sort();
 
-  @ViewChild('fruitInput')
+  @ViewChild('conceptInput')
   conceptInput!: ElementRef<HTMLInputElement>;
 
   constructor() {
@@ -49,6 +47,7 @@ export class SearchBarComponent {
       const concept = this.allConcepts.find((concept: Concept) => concept.label.toLowerCase() === value);
       if (concept && !this.concepts.includes(concept)) {
         this.concepts.push(concept);
+        this.concepts = [...this.concepts];
       }
     }
 
@@ -62,6 +61,7 @@ export class SearchBarComponent {
 
     if (index >= 0) {
       this.concepts.splice(index, 1);
+      this.concepts = [...this.concepts];
     }
   }
 
@@ -69,10 +69,10 @@ export class SearchBarComponent {
     const concept = this.allConcepts.find((concept: Concept) => concept.label === event.option.viewValue);
     if (concept && !this.concepts.includes(concept)) {
       this.concepts.push(concept);
+      this.concepts = [...this.concepts];
     }
     this.conceptInput.nativeElement.value = '';
     this.conceptCtrl.setValue(null);
-    console.log(this.concepts);
   }
 
   private _filter(conceptLabel: string): Concept[] {

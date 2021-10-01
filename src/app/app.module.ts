@@ -14,6 +14,8 @@ import { ReactiveFormsModule } from '@angular/forms';
 import { ResultListComponent } from './result-list/result-list.component';
 import { MatTableModule } from '@angular/material/table';
 import { MatPaginatorModule } from '@angular/material/paginator';
+import { MatButtonModule } from '@angular/material/button';
+import { MatTooltipModule } from '@angular/material/tooltip';
 
 @NgModule({
   declarations: [
@@ -32,7 +34,9 @@ import { MatPaginatorModule } from '@angular/material/paginator';
     MatIconModule,
     MatAutocompleteModule,
     MatTableModule,
-    MatPaginatorModule
+    MatPaginatorModule,
+    MatButtonModule,
+    MatTooltipModule
   ],
   providers: [],
   bootstrap: [AppComponent]

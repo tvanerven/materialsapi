@@ -9,3 +9,11 @@ body {
   margin: 0;
   font-family: Roboto, "Helvetica Neue", sans-serif;
 }
+
+.mat-tooltip {
+  font-size: 14px;
+}
+
+.mat-cell.mat-column-name {
+  font-weight: bold;
+}
