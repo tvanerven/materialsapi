@@ -1,4 +1,4 @@
-<table mat-table [dataSource]="dataSource" multiTemplateDataRows matSort>
+<table *ngIf="dataSource" mat-table [dataSource]="dataSource" multiTemplateDataRows matSort>
     <ng-container matColumnDef="{{column}}" *ngFor="let column of columnsToDisplay">
         <th mat-header-cell *matHeaderCellDef mat-sort-header> {{column|titlecase}} </th>
         <td mat-cell *matCellDef="let material"> {{material[column]}} </td>
@@ -13,8 +13,8 @@
                             target="_blank">{{material.doi}}</a>
                     </div>
                     <mat-chip-list>
-                        <span *ngFor="let conceptRdfAbout of material.concept">
-                            <mat-chip *ngIf="getConcept(conceptRdfAbout); let concept" #tooltip="matTooltip"
+                        <span *ngFor="let concept of material.concept">
+                            <mat-chip #tooltip="matTooltip"
                                 [matTooltip]="concept.rdfAbout" (click)="tooltip.toggle()">
                                 {{concept.label}}
                             </mat-chip>

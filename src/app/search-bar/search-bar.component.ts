@@ -1,46 +1,59 @@
 import { COMMA, ENTER } from '@angular/cdk/keycodes';
-import { Component, ElementRef, ViewChild } from '@angular/core';
+import { Component, ElementRef, OnInit, ViewChild } from '@angular/core';
 import { FormControl } from '@angular/forms';
 import { MatAutocompleteSelectedEvent } from '@angular/material/autocomplete';
 import { MatChipInputEvent } from '@angular/material/chips';
 import { Observable } from 'rxjs';
 import { map, startWith } from 'rxjs/operators';
-import { CONCEPTS } from '../../assets/concepts';
 import { Concept } from '../common/concept';
+import { ConceptService } from '../services/concept.service';
 
 @Component({
   selector: 'app-search-bar',
   templateUrl: './search-bar.component.html',
   styleUrls: ['./search-bar.component.scss']
 })
-export class SearchBarComponent {
+export class SearchBarComponent implements OnInit {
 
   separatorKeysCodes: number[] = [ENTER, COMMA];
   conceptCtrl = new FormControl();
-  filteredConcepts: Observable<Concept[]>;
+  filteredConcepts: Observable<Concept[] | undefined> | undefined;
   concepts: Concept[] = [];
-  allConcepts: Concept[] = CONCEPTS.sort();
+  allConcepts: Concept[] | undefined;
 
   @ViewChild('conceptInput')
   conceptInput!: ElementRef<HTMLInputElement>;
 
-  constructor() {
-    this.filteredConcepts = this.conceptCtrl.valueChanges.pipe(
-      startWith(null),
-      map((conceptLabel: string | Concept | null) => {
-        if (conceptLabel != null) {
-          if (typeof (conceptLabel) === 'string') {
-            return this._filter(conceptLabel)
-          } else {
-            return this._filter(conceptLabel.label);
+  constructor(
+    private conceptService: ConceptService
+  ) { }
+
+  ngOnInit(): void {
+    this.conceptService.getConcepts().subscribe({
+      next: (response) => {
+        this.allConcepts = response;
+        this.filteredConcepts = this.conceptCtrl.valueChanges.pipe(
+          startWith(null),
+          map((conceptLabel: string | Concept | null) => {
+            if (conceptLabel != null) {
+              if (typeof (conceptLabel) === 'string') {
+                return this._filter(conceptLabel);
+              } else {
+                return this._filter(conceptLabel.label);
+              }
+            }
+            return this.allConcepts?.slice();
           }
-        }
-        return this.allConcepts.slice()
+          ));
       }
-      ));
+    });
   }
 
   add(event: MatChipInputEvent): void {
+    if (this.allConcepts == null) {
+      return;
+    }
+
     const value = (event.value || '').toLowerCase().trim();
 
     if (value) {
@@ -51,7 +64,7 @@ export class SearchBarComponent {
       }
     }
 
-    event.chipInput!.clear();
+    event.chipInput?.clear();
 
     this.conceptCtrl.setValue(null);
   }
@@ -66,6 +79,10 @@ export class SearchBarComponent {
   }
 
   selected(event: MatAutocompleteSelectedEvent): void {
+    if (this.allConcepts == null) {
+      return;
+    }
+
     const concept = this.allConcepts.find((concept: Concept) => concept.label === event.option.viewValue);
     if (concept && !this.concepts.includes(concept)) {
       this.concepts.push(concept);
@@ -76,6 +93,10 @@ export class SearchBarComponent {
   }
 
   private _filter(conceptLabel: string): Concept[] {
+    if (this.allConcepts == null) {
+      return [];
+    }
+
     const filterValue = conceptLabel.toLowerCase();
 
     return this.allConcepts.filter(concept => concept.label.toLowerCase().includes(filterValue));
