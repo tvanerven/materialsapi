@@ -1,11 +1,11 @@
 import { trigger, state, style, transition, animate } from '@angular/animations';
-import { AfterViewInit, Component, Input, OnChanges, OnInit, ViewChild } from '@angular/core';
-import { Material } from '../common/material';
-import { Concept } from '../common/concept';
+import { AfterContentChecked, AfterViewChecked, Component, Input, OnChanges, OnInit, ViewChild } from '@angular/core';
+import { Material } from '../../common/material';
+import { Concept } from '../../common/concept';
 import { MatPaginator } from '@angular/material/paginator';
 import { MatSort } from '@angular/material/sort';
 import { MatTableDataSource } from '@angular/material/table';
-import { MaterialService } from '../services/material.service';
+import { MaterialService } from '../../services/material.service';
 
 @Component({
   selector: 'app-result-list',
@@ -19,11 +19,11 @@ import { MaterialService } from '../services/material.service';
       transition('expanded <=> void', animate('225ms cubic-bezier(0.4, 0.0, 0.2, 1)'))]),
   ],
 })
-export class ResultListComponent implements OnChanges, AfterViewInit, OnInit {
+export class ResultListComponent implements OnChanges, OnInit, AfterViewChecked {
   @Input() conceptFilter: Concept[] = [];
 
-  @ViewChild(MatPaginator) paginator!: MatPaginator;
-  @ViewChild(MatSort) sort!: MatSort;
+  @ViewChild(MatPaginator) paginator!: MatPaginator | null;
+  @ViewChild(MatSort) sort!: MatSort | null;
 
   dataSource: MatTableDataSource<Material> | undefined;
   columnsToDisplay = ['name', 'author'];
@@ -44,18 +44,25 @@ export class ResultListComponent implements OnChanges, AfterViewInit, OnInit {
     this.updateMaterialList();
   }
 
-  ngAfterViewInit(): void {
+  ngAfterViewChecked(): void {
     if (this.dataSource == null) {
       return;
     }
 
-    this.dataSource.paginator = this.paginator;
-    this.dataSource.sort = this.sort;
+    if (this.dataSource.paginator == null && this.paginator != null) {
+      this.dataSource.paginator = this.paginator;
+    }
+
+    if (this.dataSource.sort == null && this.paginator != null) {
+      this.dataSource.sort = this.sort;
+    }
   }
 
   updateMaterialList(): void {
     this.materialService.getMaterials(this.getRdfAboutFilter()).subscribe({
       next: (response) => {
+        response.sort((m1, m2) => m1.name.localeCompare(m2.name));
+
         if (this.dataSource == null) {
           this.dataSource = new MatTableDataSource(response);
         } else {

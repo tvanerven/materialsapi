@@ -5,8 +5,8 @@ import { MatAutocompleteSelectedEvent } from '@angular/material/autocomplete';
 import { MatChipInputEvent } from '@angular/material/chips';
 import { Observable } from 'rxjs';
 import { map, startWith } from 'rxjs/operators';
-import { Concept } from '../common/concept';
-import { ConceptService } from '../services/concept.service';
+import { Concept } from '../../common/concept';
+import { ConceptService } from '../../services/concept.service';
 
 @Component({
   selector: 'app-search-bar',

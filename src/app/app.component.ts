@@ -1,5 +1,5 @@
 import { Component, ViewChild } from '@angular/core';
-import { SearchBarComponent } from './search-bar/search-bar.component';
+import { SearchBarComponent } from './components/search-bar/search-bar.component';
 import { EnvironmentService } from './services/environment.service';
 
 @Component({

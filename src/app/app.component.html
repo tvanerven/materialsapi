@@ -4,5 +4,7 @@
     <a mat-button [href]="apiUrl" target="_blank">API documentation</a>
 </mat-toolbar>
 
+<app-loader></app-loader>
+
 <app-search-bar #searchBar></app-search-bar>
 <app-result-list [conceptFilter]="searchBar.concepts"></app-result-list>
