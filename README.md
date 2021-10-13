@@ -1,27 +1,44 @@
-# MyAp
+# Materials browser front
 
-This project was generated with [Angular CLI](https://github.com/angular/angular-cli) version 12.0.3.
+Front application for materials browser. Use materials-browser-api project.
 
-## Development server
+### Installation
 
-Run `ng serve` for a dev server. Navigate to `http://localhost:4200/`. The app will automatically reload if you change any of the source files.
+**Required** : npm
 
-## Code scaffolding
+#### 1. Download Angular CLI
 
-Run `ng generate component component-name` to generate a new component. You can also use `ng generate directive|pipe|service|class|guard|interface|enum|module`.
+`npm install -g @angular/cli`
 
-## Build
+#### 2. Clone project
 
-Run `ng build` to build the project. The build artifacts will be stored in the `dist/` directory.
+```
+git clone https://dci-gitlab.cines.fr/dad/materials-browser-front.git
+cd materials-browser-front
+```
 
-## Running unit tests
+#### 3. Install node_modules packages
 
-Run `ng test` to execute the unit tests via [Karma](https://karma-runner.github.io).
+From project root, execute : `npm install`
 
-## Running end-to-end tests
+#### 4. Machine environment file 
 
-Run `ng e2e` to execute the end-to-end tests via a platform of your choice. To use this command, you need to first add a package that implements end-to-end testing capabilities.
+For each machine where the project is deployed, there must modify machine environment variables. It can be found into file `src/assets/environment.json`.
+```
+// File example content: environment.json
+{
+  "apiUrl": "http://localhost:8000", # Materials browser API URL.
+  "log": true # Show console log.
+}
+```
 
-## Further help
+#### 5. Run development server
 
-To get more help on the Angular CLI use `ng help` or go check out the [Angular CLI Overview and Command Reference](https://angular.io/cli) page.
+Launch `ng serve` from project root. With internet browser, go to address `http://localhost:4200/`.
+
+#### 6. Create package to deploy
+
+**WARNING** : API project directory **materials-browser-api** must be in the same directory than directory **materials-browser-front**.  
+
+Launch script `build_package.sh` to create a zip archive :  
+`dist/materials-browser-front/materials-browser.zip`.
