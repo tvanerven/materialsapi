@@ -1,7 +1,7 @@
 import { trigger, state, style, transition, animate } from '@angular/animations';
-import { AfterContentChecked, AfterViewChecked, Component, Input, OnChanges, OnInit, ViewChild } from '@angular/core';
-import { Material } from '../../common/material';
-import { Concept } from '../../common/concept';
+import { AfterViewChecked, Component, Input, OnChanges, OnInit, ViewChild } from '@angular/core';
+import { Material } from '../../models/material';
+import { Concept } from '../../models/concept';
 import { MatPaginator } from '@angular/material/paginator';
 import { MatSort } from '@angular/material/sort';
 import { MatTableDataSource } from '@angular/material/table';

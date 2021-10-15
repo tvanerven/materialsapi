@@ -1,7 +1,7 @@
 import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
 import { catchError } from 'rxjs/operators';
-import { Concept } from '../common/concept';
+import { Concept } from '../models/concept';
 import { MaterialsBrowserApiService } from './materials-browser-api.service';
 
 @Injectable({

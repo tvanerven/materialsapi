@@ -2,7 +2,7 @@
 import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
 import { catchError } from 'rxjs/operators';
-import { Material } from '../common/material';
+import { Material } from '../models/material';
 import { MaterialsBrowserApiService } from './materials-browser-api.service';
 
 @Injectable({
