@@ -31,7 +31,7 @@ export class SearchBarComponent implements OnInit {
   ngOnInit(): void {
     this.conceptService.getConcepts().subscribe({
       next: (response) => {
-        this.allConcepts = response;
+        this.allConcepts = response.sort((c1, c2) => c1.label.localeCompare(c2.label));
         this.filteredConcepts = this.conceptCtrl.valueChanges.pipe(
           startWith(null),
           map((conceptLabel: string | Concept | null) => {
