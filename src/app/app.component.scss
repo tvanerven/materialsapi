@@ -1,3 +1,5 @@
+$footer-height: 64px;
+
 .spacer {
   flex: 1 1 auto;
 }
@@ -7,4 +9,26 @@
   background-color: white;
   border-radius: 30px;
   margin-right: 10px;
+}
+
+#footer {
+  background-color: #283593;
+  color: white;
+  height: $footer-height;
+  width: 100%;
+  position: fixed;
+  bottom: 0px;
+  left: 0px;
+  right: 0px;
+  font-style: italic;
+
+  strong {
+    font-size: 16px;
+    font-style: normal;
+    margin-left: 3px;
+  }
+}
+
+#content {
+  padding-bottom: $footer-height;
 }
