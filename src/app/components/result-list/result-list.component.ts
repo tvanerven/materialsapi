@@ -1,11 +1,12 @@
 import { trigger, state, style, transition, animate } from '@angular/animations';
-import { AfterViewChecked, Component, Input, OnChanges, OnInit, ViewChild } from '@angular/core';
+import { AfterViewChecked, Component, Input, OnInit, ViewChild } from '@angular/core';
 import { Material } from '../../models/material';
 import { Concept } from '../../models/concept';
 import { MatPaginator } from '@angular/material/paginator';
 import { MatSort } from '@angular/material/sort';
 import { MatTableDataSource } from '@angular/material/table';
 import { MaterialService } from '../../services/material.service';
+import { SearchBarComponent } from '../search-bar/search-bar.component';
 
 @Component({
   selector: 'app-result-list',
@@ -19,8 +20,8 @@ import { MaterialService } from '../../services/material.service';
       transition('expanded <=> void', animate('225ms cubic-bezier(0.4, 0.0, 0.2, 1)'))]),
   ],
 })
-export class ResultListComponent implements OnChanges, OnInit, AfterViewChecked {
-  @Input() conceptFilter: Concept[] = [];
+export class ResultListComponent implements OnInit, AfterViewChecked {
+  @Input() searchBar: SearchBarComponent | undefined;
 
   @ViewChild(MatPaginator) paginator!: MatPaginator | null;
   @ViewChild(MatSort) sort!: MatSort | null;
@@ -33,15 +34,11 @@ export class ResultListComponent implements OnChanges, OnInit, AfterViewChecked 
     private materialService: MaterialService
   ) { }
 
-  ngOnChanges(): void {
-    if (this.dataSource == null) {
-      return;
-    }
-    this.updateMaterialList();
-  }
-
   ngOnInit(): void {
     this.updateMaterialList();
+    this.searchBar?.searchBarChange.subscribe({
+      next: () => this.updateMaterialList()
+    });
   }
 
   ngAfterViewChecked(): void {
@@ -85,11 +82,22 @@ export class ResultListComponent implements OnChanges, OnInit, AfterViewChecked 
   }
 
   getRdfAboutFilter(): string[] {
+    if (this.searchBar == null) {
+      return [];
+    }
+
     const rdfAbout = [];
-    for (const concept of this.conceptFilter) {
+    for (const concept of this.searchBar.concepts) {
       rdfAbout.push(concept.rdfAbout);
     }
     return rdfAbout;
+  }
+
+  onClickConcept(concept: Concept): void {
+    if (this.searchBar == null) {
+      return;
+    }
+    this.searchBar.addConceptInSearchBar(concept);
   }
 
 }

@@ -3,7 +3,8 @@ import { Component, ElementRef, OnInit, ViewChild } from '@angular/core';
 import { FormControl } from '@angular/forms';
 import { MatAutocompleteSelectedEvent } from '@angular/material/autocomplete';
 import { MatChipInputEvent } from '@angular/material/chips';
-import { Observable } from 'rxjs';
+import { MatSnackBar } from '@angular/material/snack-bar';
+import { Observable, Subject } from 'rxjs';
 import { map, startWith } from 'rxjs/operators';
 import { Concept } from '../../models/concept';
 import { ConceptService } from '../../services/concept.service';
@@ -15,17 +16,23 @@ import { ConceptService } from '../../services/concept.service';
 })
 export class SearchBarComponent implements OnInit {
 
+  readonly SEARCH_BAR_LIMIT = 10;
+
   separatorKeysCodes: number[] = [ENTER, COMMA];
   conceptCtrl = new FormControl();
   filteredConcepts: Observable<Concept[] | undefined> | undefined;
   concepts: Concept[] = [];
   allConcepts: Concept[] | undefined;
 
+  private searchBarChangeSubject = new Subject<Concept[]>();
+  searchBarChange = this.searchBarChangeSubject.asObservable();
+
   @ViewChild('conceptInput')
   conceptInput!: ElementRef<HTMLInputElement>;
 
   constructor(
-    private conceptService: ConceptService
+    private conceptService: ConceptService,
+    private snackBar: MatSnackBar
   ) { }
 
   ngOnInit(): void {
@@ -58,10 +65,7 @@ export class SearchBarComponent implements OnInit {
 
     if (value) {
       const concept = this.allConcepts.find((concept: Concept) => concept.label.toLowerCase() === value);
-      if (concept && !this.concepts.includes(concept)) {
-        this.concepts.push(concept);
-        this.concepts = [...this.concepts];
-      }
+      this.addConceptInSearchBar(concept);
     }
 
     event.chipInput?.clear();
@@ -69,12 +73,36 @@ export class SearchBarComponent implements OnInit {
     this.conceptCtrl.setValue(null);
   }
 
+  addConceptInSearchBar(concept: Concept | undefined): void {
+    if (concept == null) {
+      return;
+    }
+
+    const conceptAlreadySet = this.concepts.some((c: Concept) => c.label === concept.label);
+    if (conceptAlreadySet) {
+      this.snackBar.open('Term already selected!', 'Hide',
+        {
+          duration: 2000,
+          horizontalPosition: 'center',
+          verticalPosition: 'top',
+        });
+      return;
+    }
+
+    if (this.concepts.length === this.SEARCH_BAR_LIMIT) {
+      this.concepts[this.SEARCH_BAR_LIMIT - 1] = concept;
+    } else {
+      this.concepts.push(concept);
+    }
+    this.searchBarChangeSubject.next(this.concepts);
+  }
+
   remove(concept: Concept): void {
     const index = this.concepts.indexOf(concept);
 
     if (index >= 0) {
       this.concepts.splice(index, 1);
-      this.concepts = [...this.concepts];
+      this.searchBarChangeSubject.next(this.concepts);
     }
   }
 
@@ -84,10 +112,7 @@ export class SearchBarComponent implements OnInit {
     }
 
     const concept = this.allConcepts.find((concept: Concept) => concept.label === event.option.viewValue);
-    if (concept && !this.concepts.includes(concept)) {
-      this.concepts.push(concept);
-      this.concepts = [...this.concepts];
-    }
+    this.addConceptInSearchBar(concept);
     this.conceptInput.nativeElement.value = '';
     this.conceptCtrl.setValue(null);
   }

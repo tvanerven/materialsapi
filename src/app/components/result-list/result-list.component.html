@@ -14,7 +14,7 @@
                     </div>
                     <mat-chip-list>
                         <span *ngFor="let concept of material.concept">
-                            <mat-chip #tooltip="matTooltip" [matTooltip]="concept.rdfAbout" (click)="tooltip.toggle()">
+                            <mat-chip #tooltip="matTooltip" [matTooltip]="concept.rdfAbout" (click)="tooltip.toggle();onClickConcept(concept)">
                                 {{concept.label}}
                             </mat-chip>
                         </span>
