@@ -29,19 +29,22 @@ export class AppComponent implements OnInit {
   }
 
   showHideFooter(): void {
-    const body = document.body;
-    const html = document.documentElement;
+    const d = document;
+    const body = d.body;
 
-    const height = Math.max(body.scrollHeight, body.offsetHeight,
-      html.clientHeight, html.scrollHeight, html.offsetHeight);
+    const height = Math.max(
+      body.scrollHeight, d.documentElement.scrollHeight,
+      body.offsetHeight, d.documentElement.offsetHeight,
+      body.clientHeight, d.documentElement.clientHeight
+    );
 
-    const scroll = document.body.clientHeight + window.scrollY;
-    const footer = document.getElementById('footer');
+    const scroll = Math.round(body.clientHeight + window.scrollY);
+    const footer = d.getElementById('footer');
 
     if (footer == null) {
       return;
     }
 
-    footer.hidden = scroll !== height;
+    footer.hidden = !(scroll >= height - 10);
   }
 }
