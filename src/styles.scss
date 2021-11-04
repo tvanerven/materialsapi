@@ -1,4 +1,6 @@
 /* You can add global styles to this file, and also import other style files */
+$roboto-font-path: "~roboto-fontface/fonts" !default;
+@import "~roboto-fontface/css/roboto/sass/roboto-fontface";
 
 html,
 body {
