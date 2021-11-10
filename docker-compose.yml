@@ -1,0 +1,45 @@
+version: "3.6"
+
+services:
+  db:
+    image: "mariadb:10.3"
+    restart: always
+    volumes:
+      - "db_data:/var/lib/mysql"
+    environment:
+      MYSQL_ROOT_PASSWORD: password
+      MYSQL_USER: materials-browser
+      MYSQL_PASSWORD: password
+      MYSQL_DATABASE: materials_browser
+    networks:
+      - "mbnet"
+    ports:
+      - "3306:3306"
+
+  web:
+    build:
+      context: .
+      args:
+        - API_ADDRESS=http://vps-c1786212.vps.ovh.net/api
+        - MYSQL_USER=materials-browser
+        - MYSQL_PASSWORD=password
+        - MYSQL_DATABASE=materials_browser
+    ports:
+      - "80:80"
+      - "443:443"
+    links:
+      - "db"
+    networks:
+      - "mbnet"
+    depends_on:
+      - "db"
+    environment:
+      HTTPD_SERVER_ALIAS: vps-c1786212.vps.ovh.net
+      HTTPD_SERVER_NAME: vps-c1786212.vps.ovh.net
+      HTTPD_SERVER_ADMIN: maeder@cines.fr
+
+networks:
+  mbnet: {}
+
+volumes:
+  db_data: {}
