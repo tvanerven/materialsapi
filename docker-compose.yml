@@ -7,10 +7,10 @@ services:
     volumes:
       - "db_data:/var/lib/mysql"
     environment:
-      MYSQL_ROOT_PASSWORD: password
-      MYSQL_USER: materials-browser
-      MYSQL_PASSWORD: password
-      MYSQL_DATABASE: materials_browser
+      MYSQL_ROOT_PASSWORD: ${MYSQL_ROOT_PASSWORD}
+      MYSQL_USER: ${MYSQL_USER}
+      MYSQL_PASSWORD: ${MYSQL_PASSWORD}
+      MYSQL_DATABASE: ${MYSQL_DATABASE}
     networks:
       - "mbnet"
     ports:
@@ -20,10 +20,10 @@ services:
     build:
       context: .
       args:
-        - API_ADDRESS=http://vps-c1786212.vps.ovh.net/api
-        - MYSQL_USER=materials-browser
-        - MYSQL_PASSWORD=password
-        - MYSQL_DATABASE=materials_browser
+        - API_ADDRESS=${API_ADDRESS}
+        - MYSQL_USER=${MYSQL_USER}
+        - MYSQL_PASSWORD=${MYSQL_PASSWORD}
+        - MYSQL_DATABASE=${MYSQL_DATABASE}
     ports:
       - "80:80"
       - "443:443"
@@ -34,9 +34,9 @@ services:
     depends_on:
       - "db"
     environment:
-      HTTPD_SERVER_ALIAS: vps-c1786212.vps.ovh.net
-      HTTPD_SERVER_NAME: vps-c1786212.vps.ovh.net
-      HTTPD_SERVER_ADMIN: maeder@cines.fr
+      HTTPD_SERVER_ALIAS: ${HTTPD_SERVER_ALIAS}
+      HTTPD_SERVER_NAME: ${HTTPD_SERVER_NAME}
+      HTTPD_SERVER_ADMIN: ${HTTPD_SERVER_ADMIN}
 
 networks:
   mbnet: {}
