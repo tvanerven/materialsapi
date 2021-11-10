@@ -6,7 +6,7 @@ RUN dnf update -y \
 && dnf module -y enable php:7.4 \
 && dnf update -y
 
-COPY ./dist/materials-browser-front/materials-browser.zip .
+COPY ./materials-browser.zip .
 COPY ./docker-assets/materials-browser_p80.conf /etc/httpd/conf.d
 COPY ./docker-assets/docker-services.sh /
 COPY ./docker-assets/wait-for-it.sh /

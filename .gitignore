@@ -4,6 +4,7 @@
 /dist
 /tmp
 /out-tsc
+materials-browser.zip
 # Only exists if Bazel was run
 /bazel-out
 

@@ -40,5 +40,10 @@ Launch `ng serve` from project root. With internet browser, go to address `http:
 
 **WARNING** : API project directory **materials-browser-api** must be in the same directory than directory **materials-browser-front**.  
 
-Launch script `build_package.sh` to create a zip archive :  
-`dist/materials-browser-front/materials-browser.zip`.
+Launch script `build_package.sh` to create a zip archive `materials-browser.zip`
+
+### Docker
+
+- Edit `.env` file to configure environment.
+- Launch `build_package.sh` to create application package. (like Installation > Step 6)
+- Launch `sudo podman-compose up` (or `sudo docker-compose up`)
