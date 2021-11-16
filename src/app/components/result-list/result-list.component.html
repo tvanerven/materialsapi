@@ -1,7 +1,9 @@
 <table *ngIf="dataSource" mat-table [dataSource]="dataSource" multiTemplateDataRows matSort>
     <ng-container matColumnDef="{{column}}" *ngFor="let column of columnsToDisplay">
         <th mat-header-cell *matHeaderCellDef mat-sort-header> {{column|titlecase}} </th>
-        <td mat-cell *matCellDef="let material"> {{material[column]}} </td>
+        <td mat-cell *matCellDef="let material">
+            {{column === 'date' ? (material[column]|date:'mediumDate') : material[column]}}
+        </td>
     </ng-container>
 
     <!-- Expanded Content Column - The detail row is made up of this one column that spans across all columns -->
@@ -14,7 +16,8 @@
                     </div>
                     <mat-chip-list>
                         <span *ngFor="let concept of material.concept">
-                            <mat-chip #tooltip="matTooltip" [matTooltip]="concept.rdfAbout" (click)="tooltip.toggle();onClickConcept(concept)">
+                            <mat-chip #tooltip="matTooltip" [matTooltip]="concept.rdfAbout"
+                                (click)="tooltip.toggle();onClickConcept(concept)">
                                 {{concept.label}}
                             </mat-chip>
                         </span>

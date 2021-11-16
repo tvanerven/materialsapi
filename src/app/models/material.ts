@@ -5,5 +5,6 @@ export interface Material {
     doi: string;
     name: string;
     author: string;
+    date: Date;
     concept: Concept[];
 }

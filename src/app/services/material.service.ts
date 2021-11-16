@@ -1,7 +1,7 @@
 
 import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
-import { catchError } from 'rxjs/operators';
+import { catchError, map } from 'rxjs/operators';
 import { Material } from '../models/material';
 import { MaterialsBrowserApiService } from './materials-browser-api.service';
 
@@ -18,6 +18,10 @@ export class MaterialService {
 
   getMaterials(rdfAboutConceptFilter: string[]): Observable<Material[]> {
     return this.materialsBrowserApi.getAll(this.baseUrl, true, { rdfAboutConceptFilter })
-      .pipe(catchError(this.materialsBrowserApi.handleError));
+      .pipe(map(materials => materials.map(material => {
+        material.date = new Date(material.date);
+        return material;
+      })),
+        catchError(this.materialsBrowserApi.handleError));
   }
 }

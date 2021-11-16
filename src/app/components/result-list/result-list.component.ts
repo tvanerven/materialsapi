@@ -27,7 +27,7 @@ export class ResultListComponent implements OnInit, AfterViewChecked {
   @ViewChild(MatSort) sort!: MatSort | null;
 
   dataSource: MatTableDataSource<Material> | undefined;
-  columnsToDisplay = ['name', 'author'];
+  columnsToDisplay = ['name', 'author', 'date'];
   expandedMaterial: Material | null | undefined;
 
   constructor(
