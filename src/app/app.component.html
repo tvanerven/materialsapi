@@ -1,8 +1,9 @@
-<mat-toolbar color="primary">
-    <img id="logo" src="../assets/logo.png">
-    <span>Materials browser</span>
+<mat-toolbar color="primary" id="header">
+    <a id="logo" href="https://fairsfair.eu/" target="_blank" rel="noreferrer noopener">
+        <img src="../assets/logo.png"></a>
+    <span id="app-title">Materials browser</span>
     <span class="spacer"></span>
-    <a mat-button [href]="apiUrl" target="_blank">API documentation</a>
+    <a mat-button [href]="apiUrl" target="_blank" id="api-doc">API documentation</a>
 </mat-toolbar>
 
 <section id="content">
@@ -13,6 +14,11 @@
 </section>
 
 <footer id="footer">
-    <p><a mat-button href="https://terms4fairskills.github.io/" target="_blank" rel="noreferrer noopener">The terms
-        originate from <strong>terms4FAIRskills</strong></a></p>
+    <p>
+        <a mat-button href="https://terms4fairskills.github.io/" target="_blank" rel="noreferrer noopener">The terms
+            originate from <strong id="t4fs">terms4FAIRskills</strong></a>
+        <span class="spacer"></span>
+        <a mat-button href="https://www.cines.fr/" target="_blank" rel="noreferrer noopener"><span>Powered
+                by</span><strong id="cines-logo">CINES</strong></a>
+    </p>
 </footer>

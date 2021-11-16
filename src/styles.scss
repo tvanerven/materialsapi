@@ -2,6 +2,11 @@
 $roboto-font-path: "~roboto-fontface/fonts" !default;
 @import "~roboto-fontface/css/roboto/sass/roboto-fontface";
 
+@font-face {
+  font-family: "Poppins";
+  src: url("assets/poppins.woff2") format("woff2");
+}
+
 html,
 body {
   height: 100%;
