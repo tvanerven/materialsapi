@@ -44,6 +44,20 @@ Launch script `build_package.sh` to create a zip archive `materials-browser.zip`
 
 ### Docker
 
-- Edit `.env` file to configure environment.
+- Edit `.env` file to configure Docker environment.
+```
+# File example content
+MYSQL_ROOT_PASSWORD=password
+MYSQL_USER=materials-browser
+MYSQL_PASSWORD=password
+MYSQL_DATABASE=materials_browser
+
+HTTPD_SERVER_ALIAS=domain.com
+HTTPD_SERVER_NAME=domain.com
+HTTPD_SERVER_ADMIN=xxxxx@xxxxx.xx
+
+API_ADDRESS=http://domain.com/api
+```
+
 - Launch `build_package.sh` to create application package. (like Installation > Step 6)
 - Launch `sudo podman-compose up` (or `sudo docker-compose up`)
