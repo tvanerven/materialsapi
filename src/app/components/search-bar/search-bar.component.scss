@@ -5,8 +5,14 @@ $radius: 50px;
   margin-left: 10%;
   margin-top: 10px;
 
-  input {
-    height: 32px;
+  ::ng-deep .mat-chip-list-wrapper {
+    min-height: 38px;
+  }
+
+  ::ng-deep div.mat-form-field-infix:nth-child(4) {
+    padding-bottom: 10px;
+    padding-top: 5px;
+    min-height: 32px;
   }
 
   ::ng-deep .mat-form-field-outline-start {
