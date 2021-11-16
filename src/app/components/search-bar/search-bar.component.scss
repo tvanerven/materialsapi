@@ -1,7 +1,27 @@
+$radius: 50px;
+
 .chip-list {
-  width: 100%;
+  width: 80%;
+  margin-left: 10%;
+  margin-top: 10px;
 
   input {
     height: 32px;
+  }
+
+  ::ng-deep .mat-form-field-outline-start {
+    border-radius: $radius 0 0 $radius !important;
+    min-width: $radius !important;
+  }
+  
+  ::ng-deep .mat-form-field-outline-end {
+    border-radius: 0 $radius $radius 0 !important;
+  }
+
+  #search-icon {
+    margin-left: 10px;
+    font-size: 24px;
+    color: darkgray;
+    margin-right: 20px;
   }
 }

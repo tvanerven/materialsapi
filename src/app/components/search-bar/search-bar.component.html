@@ -1,5 +1,5 @@
-<mat-form-field class="chip-list" appearance="fill">
-    <mat-label>Search bar</mat-label>
+<mat-form-field class="chip-list" appearance="outline">
+    <mat-icon matPrefix id="search-icon">search</mat-icon>
     <mat-chip-list #chipList aria-label="Term selection">
         <mat-chip *ngFor="let concept of concepts" (removed)="remove(concept)" #tooltip="matTooltip"
             [matTooltip]="concept.rdfAbout" (click)="tooltip.toggle()">
