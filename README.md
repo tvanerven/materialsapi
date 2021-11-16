@@ -57,6 +57,9 @@ HTTPD_SERVER_NAME=domain.com
 HTTPD_SERVER_ADMIN=xxxxx@xxxxx.xx
 
 API_ADDRESS=http://domain.com/api
+
+SYMFONY_APP_ENV=prod
+SYMFONY_APP_DEBUG=0
 ```
 
 - Launch `build_package.sh` to create application package. (like Installation > Step 6)

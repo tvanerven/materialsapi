@@ -15,6 +15,8 @@ ARG API_ADDRESS
 ARG MYSQL_USER
 ARG MYSQL_PASSWORD
 ARG MYSQL_DATABASE
+ARG SYMFONY_APP_ENV
+ARG SYMFONY_APP_DEBUG
 
 RUN unzip materials-browser.zip -d /var/www/html/materials-browser \
 && chown -R apache /var/www/html/materials-browser \
@@ -22,7 +24,9 @@ RUN unzip materials-browser.zip -d /var/www/html/materials-browser \
 && chmod a+x /docker-services.sh \
 && chmod a+x /wait-for-it.sh \
 && sed -i "s|http://localhost:8000|${API_ADDRESS}|g" /var/www/html/materials-browser/assets/environment.json \
-&& echo DATABASE_URL=mysql://${MYSQL_USER}:${MYSQL_PASSWORD}@127.0.0.1:3306/${MYSQL_DATABASE}?serverVersion=5.5 > /var/www/html/materials-browser/api/.env.local
+&& echo DATABASE_URL=mysql://${MYSQL_USER}:${MYSQL_PASSWORD}@127.0.0.1:3306/${MYSQL_DATABASE}?serverVersion=5.5 > /var/www/html/materials-browser/api/.env.local \
+&& echo APP_ENV=${SYMFONY_APP_ENV} >> /var/www/html/materials-browser/api/.env.local \
+&& echo APP_DEBUG=${SYMFONY_APP_DEBUG} >> /var/www/html/materials-browser/api/.env.local
 
 EXPOSE 80 443
 
