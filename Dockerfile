@@ -19,7 +19,7 @@ ARG SYMFONY_APP_ENV
 ARG SYMFONY_APP_DEBUG
 
 RUN unzip materials-browser.zip -d /var/www/html/materials-browser \
-&& chown -R apache /var/www/html/materials-browser \
+&& chown -R apache:apache /var/www/html/materials-browser \
 && mkdir /run/php-fpm \
 && chmod a+x /docker-services.sh \
 && chmod a+x /wait-for-it.sh \
