@@ -44,6 +44,10 @@ $footer-height: 120px;
   right: 0px;
   font-style: italic;
 
+  .mat-divider {
+    border-top-color: #171f5860;
+  }
+
   p * {
     font-family: "Poppins", sans-serif;
   }
@@ -51,6 +55,7 @@ $footer-height: 120px;
   #footer-links {
     display: flex;
     margin-top: 5px;
+    margin-bottom: 5px;
 
     strong {
       font-size: 16px;
@@ -61,7 +66,7 @@ $footer-height: 120px;
     #t4fs {
       padding-bottom: 4px;
     }
-  
+
     #cines-logo {
       color: #db4326;
       padding-left: 5px;
@@ -75,7 +80,7 @@ $footer-height: 120px;
     font-family: "Poppins", sans-serif;
     font-style: normal;
     font-size: 13px;
-    margin-top: 0px;
+    margin-top: 5px;
     margin-bottom: 0px;
 
     a {
