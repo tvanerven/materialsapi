@@ -9,6 +9,8 @@ services:
       MYSQL_USER: ${MYSQL_USER}
       MYSQL_PASSWORD: ${MYSQL_PASSWORD}
       MYSQL_DATABASE: ${MYSQL_DATABASE}
+    volumes:
+      - mysql_data:/var/lib/mysql
     networks:
       - "mbnet"
     ports:
@@ -40,3 +42,7 @@ services:
 
 networks:
   mbnet: {}
+
+volumes:
+  mysql_data:
+    external: true
