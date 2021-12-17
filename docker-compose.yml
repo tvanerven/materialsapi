@@ -1,8 +1,8 @@
-version: "3.6"
+version: "3.8"
 
 services:
   db:
-    image: "mariadb:10.3"
+    image: "mariadb:latest"
     restart: always
     environment:
       MYSQL_ROOT_PASSWORD: ${MYSQL_ROOT_PASSWORD}
@@ -11,6 +11,7 @@ services:
       MYSQL_DATABASE: ${MYSQL_DATABASE}
     volumes:
       - mysql_data:/var/lib/mysql
+      - mysql_database:/var/lib/mysql/materials_browser
     networks:
       - "mbnet"
     ports:
@@ -45,4 +46,6 @@ networks:
 
 volumes:
   mysql_data:
+    external: true
+  mysql_database:
     external: true
