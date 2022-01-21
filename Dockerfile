@@ -1,7 +1,7 @@
-# Centos 8, Apache, PHP Dockerfile.
+# AlmaLinux 8, Apache, PHP Dockerfile.
 
-# Install Centos 8.
-FROM centos:8
+# Install AlmaLinux 8.
+FROM almalinux:8
 
 # Update Centos 8 and install Apache and PHP 7.4.
 RUN dnf update -y \
