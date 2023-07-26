@@ -4,6 +4,7 @@ services:
   db:
     image: "mariadb:latest"
     restart: always
+    container_name: db
     environment:
       MYSQL_ROOT_PASSWORD: ${MYSQL_ROOT_PASSWORD}
       MYSQL_USER: ${MYSQL_USER}
@@ -17,7 +18,22 @@ services:
     ports:
       - "127.0.0.1:3306:3306"
 
+  materialsapi:
+    image: thomasve/materials-browser-api:0.1.0
+    command: symfony server:start
+    container_name: materialsapi
+    ports:
+      - "8000:8000"
+    networks:
+      - "mbnet"
+    depends_on:
+      - db
+
   web:
+    # image: thomasve/materials_browser_front:${TAG}
+    # image: thomasve/materialsfrontendnpm:0.1.0
+    # image: thomasve/materials-frontend:0.3.0
+    image: thomasve/materialsbrowserfront:nginx
     build:
       context: .
       args:
@@ -28,8 +44,9 @@ services:
         - SYMFONY_APP_ENV=${SYMFONY_APP_ENV}
         - SYMFONY_APP_DEBUG=${SYMFONY_APP_DEBUG}
     ports:
-      - "80:80"
-      - "443:443"
+      - "5001:80"
+    # command: ["/usr/sbin/httpd","-D","FOREGROUND"]
+    # command: ["ng", "serve"]
     links:
       - "db"
     networks:

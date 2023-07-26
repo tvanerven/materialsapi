@@ -4,7 +4,7 @@ root=$(pwd)
 
 if [ ! -d "node_modules" ]
 then
-    npm install
+    npm install --lockfile-version 1
 fi
 
 ng build --configuration production

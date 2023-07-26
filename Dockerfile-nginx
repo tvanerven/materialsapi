@@ -1,0 +1,3 @@
+FROM nginx
+
+COPY ./dist/materials-browser-front/ /usr/share/nginx/html/

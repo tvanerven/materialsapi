@@ -17,7 +17,7 @@ COPY ./docker-assets/materials-browser_p80.conf /etc/httpd/conf.d
 COPY ./docker-assets/docker-services.sh /
 COPY ./docker-assets/wait-for-it.sh /
 
-# Declare argument coming from .env file.
+# Copy application files and scripts usefull for Dockerfile.
 ARG API_ADDRESS
 ARG MYSQL_USER
 ARG MYSQL_PASSWORD
@@ -44,5 +44,9 @@ WORKDIR /var/www/html/materials-browser/api
 
 # Run Bash script which start all necessaries services.
 RUN echo "ServerName materials.fairsfair.charminghat.nl" >> /etc/httpd/apache2.conf
+
+WORKDIR /app
+COPY . .
+RUN ls -lah
+RUN npm install
 RUN npm install -g @angular/cli
-CMD ["/docker-services.sh"]
