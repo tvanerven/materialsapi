@@ -1,66 +1,24 @@
 # Materials browser front
 
-Front application for materials browser. Use materials-browser-api project.
+All documentation herein is based off [the previous repo](https://github.com/FAIRsFAIR/materials-browser-api). All of it applies.
 
-### Installation
+## Changes made
 
-**Required** : npm
+I had a large amount of difficulty getting the Docker image to work properly and play nice with a reverse proxy. As a result; I compiled to statics and then copied that inside an nginx container (which works predictably.)
 
-#### 1. Download Angular CLI
+This is roughly what the build_package.sh script does as well when you look at it; the only difference is that it's trying to run using ng, which is a hassle in this case with a reverse proxy.
 
-`npm install -g @angular/cli`
+## Compiling to statics
 
-#### 2. Clone project
+1. Clone repo
+2. Run `build_package.sh`
+3. `docker build -f Dockerfile-nginx -t <owner/name:tag> .`
+4. `docker push`
 
-```
-git clone https://dci-gitlab.cines.fr/dad/materials-browser-front.git
-cd materials-browser-front
-```
+Now serve from the image.
 
-#### 3. Install node_modules packages
+## Manual changes
 
-From project root, execute : `npm install`
+Always manually configure the API url, same as it says in the original instruction. You need to set this to the outside of your reverse proxy.
 
-#### 4. Machine environment file 
 
-For each machine where the project is deployed, there must modify machine environment variables. It can be found into file `src/assets/environment.json`.
-```
-// File example content: environment.json
-{
-  "apiUrl": "http://localhost:8000", # Materials browser API URL.
-  "log": true # Show console log.
-}
-```
-
-#### 5. Run development server
-
-Launch `ng serve` from project root. With internet browser, go to address `http://localhost:4200/`.
-
-#### 6. Create package to deploy
-
-**WARNING** : API project directory **materials-browser-api** must be in the same directory than directory **materials-browser-front**.  
-
-Launch script `build_package.sh` to create a zip archive `materials-browser.zip`
-
-### Docker
-
-- Edit `.env` file to configure Docker environment.
-```
-# File example content
-MYSQL_ROOT_PASSWORD=password
-MYSQL_USER=materials-browser
-MYSQL_PASSWORD=password
-MYSQL_DATABASE=materials_browser
-
-HTTPD_SERVER_ALIAS=domain.com
-HTTPD_SERVER_NAME=domain.com
-HTTPD_SERVER_ADMIN=xxxxx@xxxxx.xx
-
-API_ADDRESS=http://domain.com/api
-
-SYMFONY_APP_ENV=prod
-SYMFONY_APP_DEBUG=0
-```
-
-- Launch `build_package.sh` to create application package. (like Installation > Step 6)
-- Launch `sudo podman-compose up` (or `sudo docker-compose up`)
