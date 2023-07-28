@@ -22,3 +22,6 @@ Now serve from the image.
 Always manually configure the API url, same as it says in the original instruction. You need to set this to the outside of your reverse proxy.
 
 
+![EU Flag](eu_logo.png)This project has received funding from the European Union’s Horizon 2020 research and innovation programme under grant agreement No 101017536. The funding was awarded through the RDA (https://www.rd-alliance.org/) Open Call mechanism (https://eoscfuture-grants.eu/provider/research-data-alliance) based on evaluations of external, independent experts.
+
+
